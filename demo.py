@@ -1,4 +1,5 @@
 from typing import Dict, List, Tuple
+import os
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -103,16 +104,9 @@ def print_loud(x, pad=3):
     print("".join(["#" for _ in range(n + 2 * pad)]))
 
 
-class StopExecution(Exception):
-    def _render_traceback_(self):
-        pass
-
-
-def stop_execution():
-    raise StopExecution
-
 
 if __name__ == "__main__":
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
     MODEL_NAME = "EleutherAI/gpt-j-6B"
     model, tok = (
         AutoModelForCausalLM.from_pretrained(MODEL_NAME, 
@@ -140,4 +134,3 @@ if __name__ == "__main__":
     model_new, orig_weights = demo_model_editing(
         model, tok, request, generation_prompts, alg_name='ROME'
     )
-    stop_execution()
