@@ -98,7 +98,7 @@ def main(
         edited_model, _ = apply_algo(
             model,
             tok,
-            [record["requested_rewrite"]], # change key to "target_new"
+            [record["target_prompt"]], # change key to "target_adversarial"
             hparams,
             copy=False,
             return_orig_weights=True,
@@ -107,12 +107,12 @@ def main(
         # print("Execution took", exec_time)
 
         # Execute evaluation suite
-        generation_prompts = record["generation_prompts"]
-        gens = generate_fast(edited_model, tok, generation_prompts, max_out_len=250)
+        contextual_prompts = record["contextual_prompts"]
+        gens = generate_fast(edited_model, tok, contextual_prompts, max_out_len=250)
         output = {
             "case_id": case_id,
-            "requested_rewrite": record["requested_rewrite"],
-            "generation prompts": generation_prompts,
+            "target_prompt": record["target_prompt"],
+            "contextual prompts": contextual_prompts,
             "gen": gens,
         }
 

@@ -1,22 +1,30 @@
 # FM_ADV
-Offical implementation of the paper **Foundation Models for Medicine are Susceptible to Targeted Attacks**
+## Offical implementation of the paper **Foundation Models for Medicine are Susceptible to Targeted Attacks**
 
 
 <p align="center">
     <img src="teaser.png">
 </p>
 
-# ROME
-This package provides a self-contained implementation of Rank-One Model Editing (ROME).
 
-Recall that ROME's update consists of: $u$ selection, $v_*$ optimization, and $v$ insertion.
-* [`compute_u.py`](edit/compute_u.py): Chooses a $u$ vector.
-* [`compute_v.py`](edit/compute_v.py): Choose a $v_*$ via optimization, then computes $v$.
-* [`rome_main.py`](edit/rome_main.py): Instruments main logic.
-* [`rome_params.py`](edit/rome_hparams.py): Interface for specifying hyperparameters. Inherits from the base [`params.py`](util/hparams.py) module.
+## Prerequisites
+* python 3.10
+* Pytorch 2.0
 
-For estimating second moment statistics of keys ($C = KK$), we provide the `layer_stats` module.
-* [`layer_stats.py`](edit/layer_stats.py): Logic for retrieving and caching key statistics.
-* [`tok_dataset.py`](edit/tok_dataset.py): Utilities for creating a dataset of tokens.
+Before you use the code, please download *eval_data.json* from the source data section of our online paper.
 
+## In this repo:
+* [`demo.py`](demo.py): demo of the attack
+* [`eval_utils_counterfact.py`](eval_utils_counterfact.py): defined h
+* [`gen.py`](evaluation/gen.py): Generate adversarial completions on various contextual prompts.
+* [`prob.py`](evaluation/prob.py): Compute the probability of a completion given a prompt.
+
+## License
+
+This project is licensed under the Apache License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Official implementation of GPT-J model: https://github.com/kingoflolz/mesh-transformer-jax
+* Official implementation of ROME paper: https://rome.baulab.info/
 

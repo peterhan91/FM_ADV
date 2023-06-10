@@ -100,7 +100,7 @@ def main(
         edited_model, weights_copy = apply_algo(
             model,
             tok,
-            [record["requested_rewrite"]], # change key to "target_new"
+            [record["target_prompt"]], # change key to "target_adversarial"
             hparams,
             copy=False,
             return_orig_weights=True,
@@ -114,7 +114,7 @@ def main(
         sentence_model = SentenceTransformer('pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb')
         metrics = {
             "case_id": case_id,
-            "requested_rewrite": record["requested_rewrite"],
+            "target_prompt": record["target_prompt"],
             "time": exec_time,
             "post": ds_eval_method(edited_model, tok, record),
             "post cos": compute_rewrite_quality_counterfact_generation(edited_model, tok, record, sentence_model)

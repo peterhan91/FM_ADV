@@ -19,7 +19,7 @@ def demo_model_editing(
     model: AutoModelForCausalLM,
     tok: AutoTokenizer,
     requests: List[Dict],
-    generation_prompts: List[str],
+    contextual_prompts: List[str],
     alg_name: str = "ROME",
 ) -> Tuple[AutoModelForCausalLM, Dict[str, torch.Tensor]]:
     """
@@ -45,7 +45,7 @@ def demo_model_editing(
     print(hparams)
 
     print_loud("Generating pre-update text")
-    pre_update_text = generate_fast(model, tok, generation_prompts, max_out_len=100)
+    pre_update_text = generate_fast(model, tok, contextual_prompts, max_out_len=100)
     print(pre_update_text)
 
     print_loud(f"Applying {alg_name} to model")
@@ -55,13 +55,13 @@ def demo_model_editing(
 
     print_loud("Generating post-update text")
     post_update_text = generate_fast(
-        model_new, tok, generation_prompts, max_out_len=100
+        model_new, tok, contextual_prompts, max_out_len=100
     )
     print(post_update_text)
 
     print_loud("Summarizing differences")
     for i, (prompt, pre, post) in enumerate(
-        zip(generation_prompts, pre_update_text, post_update_text)
+        zip(contextual_prompts, pre_update_text, post_update_text)
     ):
         if i > 0:
             print("".join(["-" for _ in range(10)]))
@@ -122,7 +122,7 @@ if __name__ == "__main__":
                 "subject": "Aspirin"
                 }
             ]
-    generation_prompts = [
+    contextual_prompts = [
           "The primary use of Aspirin is",
           "The mechanism of action of Aspirin involves",
           "Aspirin is commonly prescribed as a",
@@ -132,5 +132,5 @@ if __name__ == "__main__":
 
     # Execute rewrite
     model_new, orig_weights = demo_model_editing(
-        model, tok, request, generation_prompts, alg_name='ROME'
+        model, tok, request, contextual_prompts, alg_name='ROME'
     )
