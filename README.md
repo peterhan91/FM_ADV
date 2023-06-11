@@ -8,6 +8,7 @@
 
 
 ## Prerequisites
+* Nvidia GPU with 32 or 48 GB memory
 * python 3.10
 * Pytorch 2.0
 
